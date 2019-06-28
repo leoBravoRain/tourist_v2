@@ -1,4 +1,4 @@
-package com.tourist;
+package com.touristv2;
 
 import com.facebook.react.ReactActivity;
 
