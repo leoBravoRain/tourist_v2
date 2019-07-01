@@ -50,7 +50,7 @@ class Main_Map extends Component {
   // Options for header bar
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Valdivia",
+      title: "Exploring the city",
       // headerTitleStyle: {
       //     textAlign: 'center',
       //     backgroundColor: 'red',
@@ -100,7 +100,7 @@ class Main_Map extends Component {
 
     // get markers for map
 
-    const url_server = "https://tourist-api.herokuapp.com/location/?format=json";
+    const url_server = "http://touristapi.pythonanywhere.com/location/" + this.props.navigation.state.params.place + '/';
     
     fetch(url_server)
           .then((response) => response.json())
@@ -109,17 +109,26 @@ class Main_Map extends Component {
             // places with activated dangers
             var places_markers_from_server = responseJson;
 
+            var first_place = places_markers_from_server[0];
+
+            console.log(first_place);
+
             // Update places markers (dangers)
             this.setState({
 
               places_markers: places_markers_from_server,
 
-              get_markers: true
+              get_markers: true,
+
+              initialPosition: {
+                latitude: parseFloat(first_place.latitude), 
+                longitude: parseFloat(first_place.longitude) 
+              },
 
             });
 
             // Get current position and analize risk
-            this.get_current_position();
+            // this.get_current_position();
 
           })
           .catch((error) => {
@@ -165,9 +174,9 @@ class Main_Map extends Component {
 
             <MapView
 
-              showsUserLocation
-              followsUserLocation
-              showsMyLocationButton
+              // showsUserLocation
+              // followsUserLocation
+              // showsMyLocationButton
 
               initialRegion={{
                 latitude: this.state.initialPosition.latitude,

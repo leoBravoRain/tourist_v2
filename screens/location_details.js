@@ -32,7 +32,7 @@ export default class Location_Details extends Component {
   // Options for header bar
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Valdivia",
+      title: "Descovering a place",
       // headerTitleStyle: {
       //     textAlign: 'center',
       //     backgroundColor: 'red',
@@ -101,7 +101,7 @@ export default class Location_Details extends Component {
   componentWillMount(){
 
     // Fetch data from server
-    fetch('https://tourist-api.herokuapp.com/videos_location/' + this.props.navigation.state.params.marker.id)
+    fetch('http://touristapi.pythonanywhere.com/videos_location/' + this.props.navigation.state.params.marker.id + '/')
           .then((response) => response.json())
           .then((responseJson) => {
 

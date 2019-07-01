@@ -10,7 +10,8 @@ import {
   PermissionsAndroid,
   NetInfo,
   // Button,
-  Picker
+  Picker,
+  ProgressBarAndroid
 } from 'react-native';
 
 import { Button } from 'react-native-elements';
@@ -51,7 +52,7 @@ async function requestLocationPermission() {
 }
 
 // ask for permissions
-requestLocationPermission();
+// requestLocationPermission();
 
 class HelloWorldApp extends Component {
 
@@ -66,7 +67,57 @@ class HelloWorldApp extends Component {
   constructor(props) {
 
     super(props);
+
+    // initial state
+    this.state = {
+
+      places: [],
+
+      // initial place
+      place: null,
+
+      // Var for indicate if it gets places
+      get_places: false,
+
+    };
   
+  }
+
+  // Component will mount
+  componentWillMount() {
+
+    // get places from API
+    const url_server = "http://touristapi.pythonanywhere.com/place/";
+    fetch(url_server)
+          .then((response) => response.json())
+          .then((responseJson) => {
+
+            // list of plcaes in JSON
+            var places_from_server = responseJson;
+
+            console.log(places_from_server);
+
+            console.log(places_from_server[0].id);
+
+
+            // Update places 
+            this.setState({
+
+              places: places_from_server,
+
+              // initial place
+              place: places_from_server[0].id,
+              place_name: places_from_server[0].name,
+              get_places: true,
+
+            });
+
+
+          })
+          .catch((error) => {
+            console.error(error);
+          });  
+
   }
 
   componentDidMount(){
@@ -120,51 +171,70 @@ class HelloWorldApp extends Component {
 
       }
 
+      // Implementation without GPS
+    // push to next page
+    if(connection_state){
+
+      // Navitage to next page
+      // this.props.navigation.push("Add_Place"); 
+      this.props.navigation.push("Map", {place: this.state.place});  
+
+    };
+    
     });
 
-    // Get gps state
-    GPSState.getStatus().then((status)=>{
 
-      // Initialize variable
-      var gps_state = false;
+    // // Get gps state
+    // GPSState.getStatus().then((status)=>{
 
-      // If gps is activated
-      if(status == 3 || status == 4){
+    //   // Initialize variable
+    //   var gps_state = false;
 
-        // Set state
-        gps_state = true;
+    //   // If gps is activated
+    //   if(status == 3 || status == 4){
 
-        // push to next page
-        if(connection_state && gps_state){
+    //     // Set state
+    //     gps_state = true;
 
-          // Navitage to next page
-          // this.props.navigation.push("Add_Place"); 
-          this.props.navigation.push("Map");  
+    //     // push to next page
+    //     if(connection_state && gps_state){
 
-        };
+    //       // Navitage to next page
+    //       // this.props.navigation.push("Add_Place"); 
+    //       this.props.navigation.push("Map", {place: this.state.place});  
 
-      }
+    //     };
 
-      // If gps is not activated
-      else{
+    //   }
 
-        // Dialog for accesor to user location
-        LocationServicesDialogBox.checkLocationServicesIsEnabled({
+    //   // If gps is not activated
+    //   else{
 
-          message: "<h2>Tu ubicación</h2> Para poder mostrarte los mejores lugares, necesitamos saber tu ubicación actual.",
-          ok: "Activar ubicación",
-          cancel: "No permitir",
+    //     // Dialog for accesor to user location
+    //     LocationServicesDialogBox.checkLocationServicesIsEnabled({
+
+    //       message: "<h2>Tu ubicación</h2> Para poder mostrarte los mejores lugares, necesitamos saber tu ubicación actual.",
+    //       ok: "Activar ubicación",
+    //       cancel: "No permitir",
           
-        });
+    //     });
 
-      }
+    //   }
      
-    });
+    // });
 
   }
 
   // Render method
   render() {
+
+    const list_places_names = this.state.places.map((item) =>{
+
+      return(item.name);
+
+    })
+
+    // console.log(list_places_names);
 
     return (
 
@@ -177,18 +247,60 @@ class HelloWorldApp extends Component {
           resizeMode='cover' 
           >
 
-          <Button
+          {
+            // If it gets the places from server
+            this.state.places.length > 0 && this.state.get_places && this.state.place
 
-            raised
+            ?
 
-            title = {"Explorar el mundo"}
+            <View style = {styles.container_flex}>
 
-            // onPress = {this.dangers_map.bind(this)}
-            onPress = {()=> this.manage_click()}
+              <Text style = {{color: 'white', fontWeight: 'bold', fontSize: 50, textAlign: 'center'}}>
 
-            buttonStyle={styles.buttonStyle}
+                What city do you want to explore?
 
-          />
+              </Text>
+
+              <Picker
+                // style = {styles.buttonStyle}
+                selectedValue={this.state.place}
+                style={{height: 50, width: 100, color: 'white', backgroundColor: 'rgba(255,100,100,0.1)'  }}
+                // itemStyle={{ backgroundColor: 'red', }}
+                itemTextStyle={{ fontSize: 180, color: 'white' }}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({place: itemValue, place_name: list_places_names[itemIndex],})
+              }>
+
+                {
+                  this.state.places.map((item) =>{
+                   return(
+                   <Picker.Item  label={item.name} value={item.id} key={item.name}/>
+                   );
+                 })
+
+                }
+              </Picker>
+
+              <Button
+
+                raised
+
+                title = {"Explore " + this.state.place_name}
+
+                // onPress = {this.dangers_map.bind(this)}
+                onPress = {()=> this.manage_click()}
+
+                buttonStyle={styles.buttonStyle}
+
+              />
+
+            </View>
+
+            :
+
+              <ProgressBarAndroid />
+
+          }
 
         </ImageBackground>
 
