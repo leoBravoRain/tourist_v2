@@ -182,10 +182,13 @@ export default class Location_Details extends Component {
 
     // Alert message for user
     Alert.alert(
-      '¡Pronto!',
-      'Pronto podrás subir tus propios videos a la plataforma',
+      // '¡Pronto!',
+      'Soon!',
+      // 'Pronto podrás subir tus propios videos a la plataforma',
+      'Soon you can upload your videos to the platform',
       [
-        {text: '¡Estaré atento!'},
+        // {text: '¡Estaré atento!'},
+        {text: 'I will be careful'}
       ],
       { cancelable: false }
     )
@@ -199,10 +202,13 @@ export default class Location_Details extends Component {
 
     // Alert message for user
     Alert.alert(
-      '¡Pronto!',
-      'Pronto podrás reaccionar a los videos!',
+      // '¡Pronto!',
+      'Soon!',
+      // 'Pronto podrás reaccionar a los videos!',
+      'Soon you can react to the videos!',
       [
-        {text: '¡Estaré atento!'},
+        // {text: '¡Estaré atento!'},
+        {text: 'I will be careful!'}
       ],
       { cancelable: false }
     )
@@ -267,9 +273,7 @@ export default class Location_Details extends Component {
 
           <Button
 
-            // raised
-
-            title="Próximo video"
+            title="Next video"
 
             onPress = {this.next_video}
 
@@ -304,7 +308,7 @@ export default class Location_Details extends Component {
 
             // raised
 
-            title="Video Anterior"
+            title="Last video"
 
             onPress = {this.back_video}
 
@@ -336,7 +340,8 @@ export default class Location_Details extends Component {
 
             // raised
 
-            title="Subir mi propio video"
+            // title="Subir mi propio video"
+            title = 'Upload my video'
 
             onPress = {this.add_video}
 

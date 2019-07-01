@@ -161,10 +161,13 @@ class HelloWorldApp extends Component {
 
         // Alert message for user
         Alert.alert(
-          'Conección a internet',
-          'Para poder usar nuestra app, debes estar conectado a internet',
+          // 'Conección a internet',
+          'Internet connection',
+          // 'Para poder usar nuestra app, debes estar conectado a internet',
+          'For use our app, you need an Internet connection',
           [
-            {text: 'Me conectaré'},
+            // {text: 'Me conectaré'},
+            {text: 'I will connect!'},
           ],
           { cancelable: false }
         )
@@ -255,7 +258,7 @@ class HelloWorldApp extends Component {
 
             <View style = {styles.container_flex}>
 
-              <Text style = {{color: 'white', fontWeight: 'bold', fontSize: 50, textAlign: 'center'}}>
+              <Text style = {{padding: 10, maxWidth: '90%', color: 'white', fontWeight: 'bold', fontSize: 55, textAlign: 'center'}}>
 
                 What city do you want to explore?
 
