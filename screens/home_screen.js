@@ -20,36 +20,36 @@ import { NavigationActions, withNavigation } from 'react-navigation';
 import GPSState from 'react-native-gps-state';
 
 
-// Permissions
-async function requestLocationPermission() {
+// // Permissions
+// async function requestLocationPermission() {
 
-  try {
+//   try {
 
-    // const granted = await PermissionsAndroid.request(
-    const granted = await PermissionsAndroid.requestMultiple(
+//     // const granted = await PermissionsAndroid.request(
+//     const granted = await PermissionsAndroid.requestMultiple(
 
-      [
+//       [
 
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        // {
-        //   'title': 'Permiso para localización',
-        //   'message': 'Para entregarte el mejor servicio, necesitas darnos el permiso para acceder a tu posición actual'
-        // },
+//         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+//         // {
+//         //   'title': 'Permiso para localización',
+//         //   'message': 'Para entregarte el mejor servicio, necesitas darnos el permiso para acceder a tu posición actual'
+//         // },
 
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        // {
-        //   'title': 'Cool Photo App Camera Permission',
-        //   'message': 'Cool Photo App needs access to your camera '
-        // }
+//         PermissionsAndroid.PERMISSIONS.CAMERA,
+//         // {
+//         //   'title': 'Cool Photo App Camera Permission',
+//         //   'message': 'Cool Photo App needs access to your camera '
+//         // }
 
-      ]
+//       ]
 
-    )
+//     )
 
-  } catch (err) {
-    console.warn(err)
-  }
-}
+//   } catch (err) {
+//     console.warn(err)
+//   }
+// }
 
 // ask for permissions
 // requestLocationPermission();
@@ -87,7 +87,7 @@ class HelloWorldApp extends Component {
   componentWillMount() {
 
     // get places from API
-    const url_server = "http://touristapi.pythonanywhere.com/place/";
+    const url_server = "https://touristapi.pythonanywhere.com/place/";
     fetch(url_server)
           .then((response) => response.json())
           .then((responseJson) => {
@@ -95,9 +95,9 @@ class HelloWorldApp extends Component {
             // list of plcaes in JSON
             var places_from_server = responseJson;
 
-            console.log(places_from_server);
+            // console.log(places_from_server);
 
-            console.log(places_from_server[0].id);
+            // console.log(places_from_server[0].id);
 
 
             // Update places 
@@ -116,23 +116,24 @@ class HelloWorldApp extends Component {
           })
           .catch((error) => {
             console.error(error);
+            Alert.alert('Error !');
           });  
 
   }
 
-  componentDidMount(){
+  // componentDidMount(){
 
-    // url server
-    const url_server = "https://tourist-api.herokuapp.com/location/?format=json";
+  //   // url server
+  //   const url_server = "https://tourist-api.herokuapp.com/location/?format=json";
 
-    // connect to server for wake up server
-    fetch(url_server, {
+  //   // connect to server for wake up server
+  //   fetch(url_server, {
 
-      method: 'GET',
+  //     method: 'GET',
 
-    });
+  //   });
 
-  }
+  // }
 
   // Manage danger map
   dangers_map(){

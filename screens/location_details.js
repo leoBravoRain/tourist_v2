@@ -32,7 +32,7 @@ export default class Location_Details extends Component {
   // Options for header bar
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Descovering a place",
+      title: "Discovering a place",
       // headerTitleStyle: {
       //     textAlign: 'center',
       //     backgroundColor: 'red',
@@ -101,7 +101,7 @@ export default class Location_Details extends Component {
   componentWillMount(){
 
     // Fetch data from server
-    fetch('http://touristapi.pythonanywhere.com/videos_location/' + this.props.navigation.state.params.marker.id + '/')
+    fetch('https://touristapi.pythonanywhere.com/videos_location/' + this.props.navigation.state.params.marker.id + '/')
           .then((response) => response.json())
           .then((responseJson) => {
 

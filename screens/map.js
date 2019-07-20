@@ -97,11 +97,10 @@ class Main_Map extends Component {
   };
 
   componentWillMount() {
-
     // get markers for map
 
-    const url_server = "http://touristapi.pythonanywhere.com/location/" + this.props.navigation.state.params.place + '/';
-    
+    const url_server = "https://touristapi.pythonanywhere.com/location/" + this.props.navigation.state.params.place + '/';
+
     fetch(url_server)
           .then((response) => response.json())
           .then((responseJson) => {
