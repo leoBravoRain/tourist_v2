@@ -107,6 +107,10 @@ export default class Location_Details extends Component {
 
             const videos_list = responseJson;
 
+            // console.log(videos_list);
+
+            // Alert.alert(String(videos_list[0].link));
+
             this.setState({
 
               // Get list of json objects
@@ -120,9 +124,13 @@ export default class Location_Details extends Component {
 
             });
 
+            // Alert.alert('get videos variable: ' + String(this.state.get_videos));
+
           })
           .catch((error) => {
-            console.error(error);
+            Alert.alert('Error');
+            console.error(String(error));
+            Alert.alert('get videos variable: ' + String(this.state.get_videos));
           }); 
 
   }
@@ -232,6 +240,9 @@ export default class Location_Details extends Component {
         { this.state.get_videos ? 
 
           <WebView
+
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
 
             source={{ uri: this.state.video.link }}
 
